@@ -35,9 +35,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Ollama Code Review
-        uses: ./.github/actions/ollama-code-review
+        uses: qwen2.5-coder:3b@main
         with:
-          llm-model: 'codegemma'
+          llm-model: 'qwen2.5-coder:3b'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 ```
