@@ -1,4 +1,4 @@
-name: 'Code Review using Ollama'
+name: 'Code Review using qwen2.5-coder'
 description: 'Perform a code review on code modified using Ollama'
 inputs:
   llm-model:
@@ -35,3 +35,4 @@ inputs:
 
           gh pr comment ${{ github.event.pull_request.number }} --body "$(cat ollama_review.txt)"
         shell: bash
+
