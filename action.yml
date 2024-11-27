@@ -22,10 +22,25 @@ runs:
       with:
         fetch-depth: 0
 
-    - name: Install Ollama
+    - name: Install and Start Ollama (CPU Mode)
       run: |
+        # Install Ollama
         curl -fsSL https://ollama.com/install.sh | bash
-        ollama pull ${{ inputs.llm-model }}
+        
+        # Start Ollama in CPU-only mode
+        nohup ollama serve --cpu > ollama.log 2>&1 &
+        
+        # Wait for Ollama to start
+        for i in {1..10}; do
+          if curl -s http://127.0.0.1:11434/health | grep "OK"; then
+            echo "Ollama is running in CPU-only mode."
+            exit 0
+          fi
+          echo "Waiting for Ollama to start..."
+          sleep 5
+        done
+        echo "Ollama did not start in time."
+        exit 1
       shell: bash
 
     - name: Get modified files
